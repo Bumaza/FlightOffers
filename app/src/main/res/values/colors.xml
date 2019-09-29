@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#009882</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="kiwiColor">#009882</color>
+    <color name="kiwiOrange">#f9971e</color>
+    <color name="kiwiWhite">#FFFF</color>
+</resources>
