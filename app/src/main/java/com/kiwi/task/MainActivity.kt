@@ -54,9 +54,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val permissions = arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION)
-
-
         viewPager = findViewById<ViewPager>(R.id.view_pager)
         dotsIndicator = findViewById<WormDotsIndicator>(R.id.dots_inticator)
         dialog = ProgressDialog(this)
@@ -66,13 +63,11 @@ class MainActivity : AppCompatActivity() {
 
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, permissions,0)
+            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION),0)
         }else{
             locationManager = getSystemService(LOCATION_SERVICE) as LocationManager?;
             locationManager?.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0L, 0f, locationListener)
         }
-
-
 
         callPopularFlights()
 
@@ -84,13 +79,17 @@ class MainActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED) {
+            locationManager = getSystemService(LOCATION_SERVICE) as LocationManager?;
+            locationManager?.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0L, 0f, locationListener)
+        }
     }
 
     private val locationListener: LocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location) {
-            KiwiApi.query["flyFrom"] = "%f-%f-250km".format(location.longitude, location.latitude)
-            callPopularFlights()
+           //KiwiApi.query["flyFrom"] = "%f-%f-250km".format(location.longitude, location.latitude)
+            // callPopularFlights()
         }
         override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
         override fun onProviderEnabled(provider: String) {}
@@ -107,7 +106,7 @@ class MainActivity : AppCompatActivity() {
 
         val calendar = Calendar.getInstance()
         calendar.time = Date()
-        calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR)+1)
+        if(tomorrow) calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR)+1)
 
         KiwiApi.query["dateFrom"] = formatter!!.format(calendar.time)
         KiwiApi.query["dateTo"] = formatter!!.format(calendar.time)
@@ -118,15 +117,15 @@ class MainActivity : AppCompatActivity() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {result -> showFlightsResult(result)},
-                {error -> showError(error.message!!)  }//error.message?.let { showError(it) }
+                {error -> error.message?.let { showError(it)}}
             )
     }
 
     private fun showError(errorMessage: String){
         if(dialog?.isShowing!!) dialog?.dismiss()
-        dialog?.setTitle("ERROR")
-        dialog?.setMessage(errorMessage)
-        dialog?.show()
+//        dialog?.setTitle("ERROR")
+//        dialog?.setMessage(errorMessage)
+//        dialog?.show()
     }
 
     private fun showFlightsResult(result: FlightDataResponse){
@@ -140,7 +139,7 @@ class MainActivity : AppCompatActivity() {
         val storedDate: Long = sharedPref?.getLongValue(KEY_DATE)!!
 
         if(data.isEmpty()){
-            callPopularFlights()
+            callPopularFlights(tomorrow = true)
             return ArrayList()
         }
 

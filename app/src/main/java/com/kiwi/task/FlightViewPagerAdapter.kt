@@ -61,9 +61,13 @@ class FlightViewPagerAdapter(private val context: Context, data: ArrayList<Fligh
         durationLabel.text = flight?.fly_duration
         distanceLabel.text = flight?.distance.toString() + "km"
         priceLabel.text = flight?.price.toString()
+
         val simpleDateFormat = SimpleDateFormat("HH:mm")
-        dTimeLabel.text = simpleDateFormat.format(Date(flight?.dTime!!))
-        aTimeLabel.text = simpleDateFormat.format(Date(flight?.aTime!!))
+        dTimeLabel.text = simpleDateFormat.format(Date(flight?.dTimeUTC!!))
+        aTimeLabel.text = simpleDateFormat.format(Date(flight?.aTimeUTC!!))
+
+        aTimeLabel.visibility = View.GONE
+        dTimeLabel.visibility = View.GONE
 
 
         fromLabel.isSelected = true
