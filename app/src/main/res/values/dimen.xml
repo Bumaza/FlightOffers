@@ -4,6 +4,6 @@
     <dimen name="large_radius">30dp</dimen>
     <dimen name="padding">10dp</dimen>
     <dimen name="margin">10dp</dimen>
-    <dimen name="elevation">8dp</dimen>
+    <dimen name="elevation">2dp</dimen>
 
 </resources>

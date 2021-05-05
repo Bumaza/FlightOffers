@@ -27,8 +27,15 @@ data class Flight (
 ) : Serializable {
 
     fun imageUrl() : String {
-        Log.d("IMAGE", "${BuildConfig.IMAGES_URL}${mapIdto}${BuildConfig.IMG_EXTENSION}")
         return "${BuildConfig.IMAGES_URL}${mapIdto}${BuildConfig.IMG_EXTENSION}"
+    }
+
+    fun formatPrice(): String{
+        return "$price €"
+    }
+
+    fun formatDistance(): String{
+        return "${distance}km"
     }
 }
 

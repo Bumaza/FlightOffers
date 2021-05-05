@@ -3,24 +3,20 @@ package com.kiwi.task.ui.adapters
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.kiwi.task.R
-import com.kiwi.task.databinding.ViewpagerFlightBinding
+import com.kiwi.task.databinding.FlightItemBinding
 import com.kiwi.task.models.Flight
 import com.kiwi.task.repository.api.KiwiApi
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import okhttp3.ResponseBody
-import java.text.SimpleDateFormat
-import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import kotlin.math.min
@@ -30,7 +26,7 @@ class FlightViewPagerAdapter(private val context: Context, data: ArrayList<Fligh
     var inflater : LayoutInflater = LayoutInflater.from(context)
     var flights: ArrayList<Flight> = ArrayList<Flight>()
 
-    lateinit var binding: ViewpagerFlightBinding
+    lateinit var binding: FlightItemBinding
 
     val cityBitmaps: HashMap<String, Bitmap>? = HashMap<String, Bitmap>()
 
@@ -50,7 +46,7 @@ class FlightViewPagerAdapter(private val context: Context, data: ArrayList<Fligh
 
         val flight: Flight? = flights[position]
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.viewpager_flight, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.flight_item, container, false)
         binding.flight = flight
 
         container.addView(binding.root)

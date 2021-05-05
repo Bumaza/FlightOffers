@@ -67,10 +67,22 @@
     </style>
 
 
+    <style name="WhiteTitle28" parent="BoldText">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">28sp</item>
+    </style>
+
     <style name="GreyText16" parent="RegularText">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/grey</item>
     </style>
+
+    <style name="GreyText12" parent="RegularText">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/grey</item>
+    </style>
+
+
 
 
 </resources>
