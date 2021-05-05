@@ -25,19 +25,19 @@ interface KiwiApi {
         INFANTS("infants"),
         FLY_FROM("flyFrom"),
         TO("to"),
-        FEATURE_NAME("featureNmae"),
+        FEATURE_NAME("featureName"),
         DATE_FROM("dateFrom"),
         DATE_TO("dateTo"),
         FLIGHT_TYPE("typeFlight"),
         ONE_PER_DATE("one_per_date"),
         ONE_FOR_CITY("oneforcity"),
         WAIT_FOR_REFRESH("wait_for_refresh"),
-        ADULTS("1"),
+        ADULTS("adults"),
     }
 
     companion object {
 
-        val kiwiApiService by lazy {
+        val service by lazy {
             create()
         }
 

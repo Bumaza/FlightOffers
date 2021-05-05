@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.kiwi.task.viewmodels.TopOffersViewModel"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/padding"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <View
+            android:background="@drawable/indicator"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="60dp"
+            android:layout_height="4dp"/>
+
+
+        <RelativeLayout
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:text="@string/filter"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                style="@style/BoldText18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+
+        </RelativeLayout>
+
+        <TextView
+            style="@style/GreyText16"
+            android:layout_marginTop="20dp"
+            android:text="@string/adults"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.slider.Slider
+            android:layout_marginTop="5dp"
+            android:value="1"
+            android:valueFrom="1"
+            android:valueTo="8"
+            android:stepSize="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView
+            style="@style/GreyText16"
+            android:layout_marginTop="20dp"
+            android:text="@string/children"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <com.google.android.material.slider.Slider
+            android:layout_marginTop="5dp"
+            android:value="0"
+            android:valueFrom="0"
+            android:valueTo="8"
+            android:stepSize="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            style="@style/GreyText16"
+            android:layout_marginTop="20dp"
+            android:text="@string/arrange_by"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:onClick="@{() -> viewModel.onAscSelect()}"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginBottom="@dimen/padding"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:onClick="@{() -> viewModel.onAscSelect()}"
+                    android:buttonTint="@color/kiwiColor"
+                    android:gravity="center_vertical"
+                    android:checked="@{viewModel.isAscOrder()}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_marginRight="10dp"
+                    style="@style/NormalText18"
+                    android:text="@string/asc"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:onClick="@{() -> viewModel.onDescSelect()}"
+                android:layout_marginBottom="@dimen/padding"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:onClick="@{() -> viewModel.onDescSelect()}"
+                    android:buttonTint="@color/kiwiColor"
+                    android:gravity="center_vertical"
+                    android:checked="@{!viewModel.isAscOrder()}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_marginRight="10dp"
+                    style="@style/NormalText18"
+                    android:text="@string/desc"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <Button
+            android:onClick="@{() -> viewModel.applyFilter()}"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@{viewModel.isChange() ? @color/white : @color/grey}"
+            android:background="@{viewModel.isChange() ? @drawable/active_button : @drawable/border_bg}"
+            android:text="@string/apply"
+            style="@style/BoldText14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+</layout>

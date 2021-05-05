@@ -1,5 +1,6 @@
 package com.kiwi.task.models
 
+import android.util.Log
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
@@ -25,9 +26,9 @@ data class Flight (
     var aTime: Long
 ) : Serializable {
 
-    fun imageURL() : String {
-
-        return "${BuildConfig.IMAGES_URL}${mapIdfrom}{${BuildConfig.IMG_EXTENSION}"
+    fun imageUrl() : String {
+        Log.d("IMAGE", "${BuildConfig.IMAGES_URL}${mapIdto}${BuildConfig.IMG_EXTENSION}")
+        return "${BuildConfig.IMAGES_URL}${mapIdto}${BuildConfig.IMG_EXTENSION}"
     }
 }
 

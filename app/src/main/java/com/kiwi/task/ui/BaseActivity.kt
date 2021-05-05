@@ -1,9 +1,21 @@
 package com.kiwi.task.ui
 
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.kiwi.task.viewmodels.BaseViewModel
+import com.kiwi.task.R
 
-class BaseActivity : AppCompatActivity() {
+open class BaseActivity : AppCompatActivity() {
 
-    lateinit var viewModel: BaseViewModel
+    var refreshWifiState: Button? = null
+
+    fun initNetworkErrorLayout(){
+        refreshWifiState = findViewById(R.id.refresh_network_state)
+        refreshWifiState?.setOnClickListener {
+            onRefreshNetwork()
+        }
+    }
+
+    open fun onRefreshNetwork(){
+
+    }
 }

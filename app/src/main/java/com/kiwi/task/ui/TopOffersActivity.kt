@@ -6,7 +6,6 @@ import android.os.Bundle
 import androidx.viewpager.widget.ViewPager
 import com.kiwi.task.models.SearchResult
 import com.kiwi.task.repository.api.KiwiApi
-import com.kiwi.task.repository.api.KiwiApi.Companion.kiwiApiService
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -17,6 +16,7 @@ import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.text.format.DateUtils
+import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -25,6 +25,7 @@ import com.kiwi.task.ui.adapters.FlightViewPagerAdapter
 import com.kiwi.task.R
 import com.kiwi.task.databinding.ActivityTopOffersBinding
 import com.kiwi.task.models.Flight
+import com.kiwi.task.ui.fragments.FilterBottomSheetFragment
 import com.kiwi.task.utils.MessageBox
 import com.kiwi.task.utils.ViewModelFactory
 import com.kiwi.task.viewmodels.TopOffersViewModel
@@ -50,14 +51,16 @@ class TopOffersActivity : AppCompatActivity() {
     private var KEY_DATE = "date"
 
     lateinit var binding: ActivityTopOffersBinding
+    lateinit var viewModel: TopOffersViewModel
+    lateinit var filterFragment: FilterBottomSheetFragment
 
     @SuppressLint("MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_top_offers)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_top_offers)
-//        viewModel = ViewModelProviders.of(this,
-//            ViewModelFactory.viewModelFactory { TopOffersViewModel() }).get(TopOffersViewModel::class.java)
+        viewModel = ViewModelProviders.of(this,
+            ViewModelFactory.viewModelFactory { TopOffersViewModel() }).get(TopOffersViewModel::class.java)
 
         viewPager = findViewById<ViewPager>(R.id.view_pager)
         dotsIndicator = findViewById<WormDotsIndicator>(R.id.dots_inticator)
@@ -78,6 +81,7 @@ class TopOffersActivity : AppCompatActivity() {
 
         MessageBox.showError(binding.root.parent, "Chyba", "NIeco je zle.")
 
+        onFilterOpen(null)
     }
 
     override fun onRequestPermissionsResult(
@@ -119,7 +123,7 @@ class TopOffersActivity : AppCompatActivity() {
         KiwiApi.defaultQuery["dateTo"] = formatter!!.format(calendar.time)
         KiwiApi.defaultQuery["limit"] = "%d".format(limit)
 
-        disposable = kiwiApiService.getPopularFlights(KiwiApi.defaultQuery)
+        disposable = KiwiApi.service.getPopularFlights(KiwiApi.defaultQuery)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -175,5 +179,13 @@ class TopOffersActivity : AppCompatActivity() {
             return dayOffers
         }
         return data.toCollection(ArrayList())
+    }
+
+    fun onFilterOpen(view: View?){
+        supportFragmentManager.let{
+            filterFragment = FilterBottomSheetFragment.newInstance(viewModel).apply {
+                show(it, tag)
+            }
+        }
     }
 }
