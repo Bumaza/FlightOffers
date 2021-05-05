@@ -7,4 +7,12 @@
     <color name="kiwiColor">#009882</color>
     <color name="kiwiOrange">#f9971e</color>
     <color name="kiwiWhite">#FFFF</color>
+
+
+    <color name="white">#fff</color>
+    <color name="textColor">#02203D</color>
+    <color name="grey">#9098B1</color>
+
+
+
 </resources>

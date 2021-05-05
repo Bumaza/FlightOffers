@@ -32,4 +32,36 @@
         <item name="android:textAllCaps">false</item>
     </style>
 
+    <style name="RegularText" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:fontFamily">@font/opensans_regular</item>
+    </style>
+
+    <style name="BoldText" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:fontFamily">@font/opensans_bold</item>
+    </style>
+
+    <style name="NormalText14" parent="RegularText">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="NormalText16" parent="RegularText">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="NormalText18" parent="RegularText">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="BoldText18" parent="BoldText">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="BoldText20" parent="BoldText">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+
+
 </resources>

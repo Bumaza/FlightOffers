@@ -1,36 +1,28 @@
-package com.kiwi.task
+package com.kiwi.task.ui
 
 import android.annotation.SuppressLint
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.viewpager.widget.ViewPager
-import com.kiwi.task.api.FlightDataResponse
-import com.kiwi.task.api.KiwiApi
-import com.kiwi.task.api.KiwiApi.Companion.kiwiApiImageService
-import com.kiwi.task.api.KiwiApi.Companion.kiwiApiService
-import com.kiwi.task.model.FlightData
+import com.kiwi.task.models.SearchResult
+import com.kiwi.task.repository.api.KiwiApi
+import com.kiwi.task.repository.api.KiwiApi.Companion.kiwiApiService
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import okhttp3.ResponseBody
 import android.app.ProgressDialog
-import android.content.Context
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.text.format.DateUtils
-import android.util.Log
-import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.kiwi.task.ui.adapters.FlightViewPagerAdapter
+import com.kiwi.task.R
+import com.kiwi.task.models.Flight
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -128,13 +120,17 @@ class MainActivity : AppCompatActivity() {
 //        dialog?.show()
     }
 
-    private fun showFlightsResult(result: FlightDataResponse){
+    private fun showFlightsResult(result: SearchResult){
         if (dialog?.isShowing!!) dialog?.dismiss()
-        viewPager?.adapter = FlightViewPagerAdapter(this, dailyCheck(result.data))
+        viewPager?.adapter =
+            FlightViewPagerAdapter(
+                this,
+                dailyCheck(result.flights)
+            )
         dotsIndicator?.setViewPager(viewPager!!)
     }
 
-    private fun dailyCheck(data: Array<FlightData>): ArrayList<FlightData>{
+    private fun dailyCheck(data: Array<Flight>): ArrayList<Flight>{
 
         val storedDate: Long = sharedPref?.getLongValue(KEY_DATE)!!
 
@@ -145,7 +141,7 @@ class MainActivity : AppCompatActivity() {
 
         if(storedDate >= 0 && !DateUtils.isToday(storedDate)){
             val showedFlights = sharedPref?.getStringSet()
-            val dayOffers = ArrayList<FlightData>()
+            val dayOffers = ArrayList<Flight>()
 
             for(flight in data){
                 if(!showedFlights?.contains(flight.id)!!){
@@ -156,7 +152,7 @@ class MainActivity : AppCompatActivity() {
 
             if(dayOffers.size < 5){
                 callPopularFlights(showedFlights?.size!! + 5) //call +5(Dirichlet's principle)
-                return ArrayList<FlightData>()
+                return ArrayList<Flight>()
             }
 
             sharedPref?.save(dayOffers)

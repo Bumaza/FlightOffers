@@ -2,7 +2,7 @@ package com.kiwi.task.utils
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.kiwi.task.model.FlightData
+import com.kiwi.task.models.Flight
 
 class SharedPreferences(val context: Context) {
 
@@ -22,7 +22,7 @@ class SharedPreferences(val context: Context) {
         editor.commit()
     }
 
-    fun save(data: ArrayList<FlightData>){
+    fun save(data: ArrayList<Flight>){
         val editor: SharedPreferences.Editor = sharedPref.edit()
 
         val newSet = getStringSet()

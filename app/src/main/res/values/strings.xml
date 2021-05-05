@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Flight Offers</string>
+
+    <string name="wifi_error_title">No network connection</string>
+    <string name="wifi_error_text">Connect to the internet and try again..</string>
+    <string name="refresh">Refresh</string>
 </resources>
