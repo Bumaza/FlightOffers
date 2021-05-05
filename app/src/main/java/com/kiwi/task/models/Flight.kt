@@ -1,13 +1,14 @@
 package com.kiwi.task.models
 
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import com.kiwi.task.BuildConfig
 import java.io.Serializable
 
 @Entity(tableName = "flights")
 data class Flight (
-    var id: String,
+    @PrimaryKey var id: String,
     var price: Double,
     var quality: Double,
     @SerializedName("fly_duration")var duration: String,

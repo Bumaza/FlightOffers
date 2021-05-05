@@ -11,7 +11,29 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 
+
 interface KiwiApi {
+
+    enum class FlightParams(val value: String) {
+        VERSION("v"),
+        SORT("sort"),
+        ASC("asc"),
+        LOCALE("locale"),
+        PARTNER("partner"),
+        LIMIT("limit"),
+        CHILDREN("children"),
+        INFANTS("infants"),
+        FLY_FROM("flyFrom"),
+        TO("to"),
+        FEATURE_NAME("featureNmae"),
+        DATE_FROM("dateFrom"),
+        DATE_TO("dateTo"),
+        FLIGHT_TYPE("typeFlight"),
+        ONE_PER_DATE("one_per_date"),
+        ONE_FOR_CITY("oneforcity"),
+        WAIT_FOR_REFRESH("wait_for_refresh"),
+        ADULTS("1"),
+    }
 
     companion object {
 
@@ -23,26 +45,26 @@ interface KiwiApi {
             createImageApi()
         }
 
-        val query: MutableMap<String, String> = mutableMapOf(
-            "v" to BuildConfig.API_VERSION.toString(),
-            "sort" to "popularity",
-            "asc" to "0",
-            "locale" to "en",
-            "children" to "0",
-            "infants" to "0",
-            "flyFrom" to "49.2-16.61-250km",
-            "to" to "anywhere",
-            "featureName" to "aggregateResults",
-            "dateFrom" to "10/05/2021",
-            "dateTo" to "29/05/2021",
-            "typeFlight" to "oneway",
-            "partner" to "picky",
-            "one_per_date" to "0",
-            "oneforcity" to "1",
-            "wait_for_refresh" to "0",
-            "adults" to "1",
-            "limit" to "5",
-            "partner" to "skypicker-android")
+
+        val defaultQuery: MutableMap<String, String> = mutableMapOf(
+            FlightParams.VERSION.value to BuildConfig.API_VERSION.toString(),
+            FlightParams.SORT.value to "popularity",
+            FlightParams.ASC.value to "0",
+            FlightParams.LOCALE.value to "en",
+            FlightParams.CHILDREN.value to "0",
+            FlightParams.INFANTS.value to "0",
+            FlightParams.FLY_FROM.value to "49.2-16.61-250km",
+            FlightParams.TO.value to "anywhere",
+            FlightParams.FEATURE_NAME.value to "aggregateResults",
+            FlightParams.DATE_FROM.value to "10/05/2021",
+            FlightParams.DATE_TO.value to "29/05/2021",
+            FlightParams.FLIGHT_TYPE.value to "oneway",
+            FlightParams.ONE_PER_DATE.value to "0",
+            FlightParams.ONE_FOR_CITY.value to "1",
+            FlightParams.WAIT_FOR_REFRESH.value  to "0",
+            FlightParams.ADULTS.value to "1",
+            FlightParams.LIMIT.value to "5",
+            FlightParams.PARTNER.value to "skypicker-android")
 
         private fun create(): KiwiApi {
 

@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.kiwi.task"
-        minSdkVersion 19
+        minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -31,6 +31,7 @@ android {
             buildConfigField "String", "API_URL", "\"https://api.skypicker.com/\""
             buildConfigField "String", "IMAGES_URL", "\"https://images.kiwi.com/photos/600x330/\""
             buildConfigField "String", "IMG_EXTENSION", "\".jpg\""
+            buildConfigField "String", "API_PARTNER", "\"skypicker-android\""
             buildConfigField "int", "API_VERSION", "3"
         }
 
@@ -57,6 +58,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.6.2'
     implementation "com.squareup.okhttp3:logging-interceptor:4.9.0"
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
     def lifecycle_version = "2.1.0"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"

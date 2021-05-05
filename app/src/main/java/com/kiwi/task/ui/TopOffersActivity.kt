@@ -20,17 +20,22 @@ import android.text.format.DateUtils
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProviders
 import com.kiwi.task.ui.adapters.FlightViewPagerAdapter
 import com.kiwi.task.R
 import com.kiwi.task.databinding.ActivityTopOffersBinding
 import com.kiwi.task.models.Flight
 import com.kiwi.task.utils.MessageBox
+import com.kiwi.task.utils.ViewModelFactory
+import com.kiwi.task.viewmodels.TopOffersViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
 
 class TopOffersActivity : AppCompatActivity() {
+
+    private val TAG: String = "TopOfffers"
 
     private var disposable: Disposable? = null
     private var viewPager: ViewPager? = null
@@ -51,6 +56,9 @@ class TopOffersActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_top_offers)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_top_offers)
+//        viewModel = ViewModelProviders.of(this,
+//            ViewModelFactory.viewModelFactory { TopOffersViewModel() }).get(TopOffersViewModel::class.java)
+
         viewPager = findViewById<ViewPager>(R.id.view_pager)
         dotsIndicator = findViewById<WormDotsIndicator>(R.id.dots_inticator)
         dialog = ProgressDialog(this)
@@ -107,11 +115,11 @@ class TopOffersActivity : AppCompatActivity() {
         calendar.time = Date()
         if(tomorrow) calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR)+1)
 
-        KiwiApi.query["dateFrom"] = formatter!!.format(calendar.time)
-        KiwiApi.query["dateTo"] = formatter!!.format(calendar.time)
-        KiwiApi.query["limit"] = "%d".format(limit)
+        KiwiApi.defaultQuery["dateFrom"] = formatter!!.format(calendar.time)
+        KiwiApi.defaultQuery["dateTo"] = formatter!!.format(calendar.time)
+        KiwiApi.defaultQuery["limit"] = "%d".format(limit)
 
-        disposable = kiwiApiService.getPopularFlights(KiwiApi.query)
+        disposable = kiwiApiService.getPopularFlights(KiwiApi.defaultQuery)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
