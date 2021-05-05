@@ -19,15 +19,18 @@ import android.location.LocationManager
 import android.text.format.DateUtils
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import com.kiwi.task.ui.adapters.FlightViewPagerAdapter
 import com.kiwi.task.R
+import com.kiwi.task.databinding.ActivityTopOffersBinding
 import com.kiwi.task.models.Flight
+import com.kiwi.task.utils.MessageBox
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
 
-class MainActivity : AppCompatActivity() {
+class TopOffersActivity : AppCompatActivity() {
 
     private var disposable: Disposable? = null
     private var viewPager: ViewPager? = null
@@ -41,11 +44,13 @@ class MainActivity : AppCompatActivity() {
 
     private var KEY_DATE = "date"
 
+    lateinit var binding: ActivityTopOffersBinding
+
     @SuppressLint("MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
+        setContentView(R.layout.activity_top_offers)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_top_offers)
         viewPager = findViewById<ViewPager>(R.id.view_pager)
         dotsIndicator = findViewById<WormDotsIndicator>(R.id.dots_inticator)
         dialog = ProgressDialog(this)
@@ -62,6 +67,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         callPopularFlights()
+
+        MessageBox.showError(binding.root.parent, "Chyba", "NIeco je zle.")
 
     }
 

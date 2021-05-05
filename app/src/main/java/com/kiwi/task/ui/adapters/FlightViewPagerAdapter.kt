@@ -1,4 +1,4 @@
-package com.kiwi.task
+package com.kiwi.task.ui.adapters
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -10,22 +10,22 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.kiwi.task.api.KiwiApi
-import com.kiwi.task.model.FlightData
+import com.kiwi.task.R
+import com.kiwi.task.models.Flight
+import com.kiwi.task.repository.api.KiwiApi
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import okhttp3.ResponseBody
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import kotlin.math.min
 
-class FlightViewPagerAdapter(private val context: Context, data: ArrayList<FlightData>) : PagerAdapter() {
+class FlightViewPagerAdapter(private val context: Context, data: ArrayList<Flight>) : PagerAdapter() {
 
     private var layoutInflater : LayoutInflater ? = null
-    var flights: ArrayList<FlightData> = ArrayList<FlightData>()
+    var flights: ArrayList<Flight> = ArrayList<Flight>()
 
     val cityBitmaps: HashMap<String, Bitmap>? = HashMap<String, Bitmap>()
 
@@ -54,11 +54,11 @@ class FlightViewPagerAdapter(private val context: Context, data: ArrayList<Fligh
         val distanceLabel = view.findViewById<TextView>(R.id.distance)
         val priceLabel = view.findViewById<TextView>(R.id.price)
 
-        val flight: FlightData? = flights[position]
+        val flight: Flight? = flights[position]
 
         fromLabel.text = flight?.cityFrom
         toLabel.text = flight?.cityTo
-        durationLabel.text = flight?.fly_duration
+        durationLabel.text = flight?.duration
         distanceLabel.text = flight?.distance.toString() + "km"
         priceLabel.text = flight?.price.toString()
 

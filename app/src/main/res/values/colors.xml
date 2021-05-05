@@ -13,6 +13,7 @@
     <color name="textColor">#02203D</color>
     <color name="grey">#9098B1</color>
 
-
+    <color name="msgbox_error_bg">#ef4242</color>
+    <color name="msgbox_success_bg">#009882</color>
 
 </resources>

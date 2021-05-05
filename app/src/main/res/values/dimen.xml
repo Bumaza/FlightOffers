@@ -3,5 +3,6 @@
     <dimen name="radius">4dp</dimen>
     <dimen name="padding">10dp</dimen>
     <dimen name="margin">10dp</dimen>
+    <dimen name="elevation">8dp</dimen>
 
 </resources>
