@@ -11,11 +11,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import android.app.ProgressDialog
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.text.format.DateUtils
+import android.util.Log
 import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -34,7 +36,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class TopOffersActivity : AppCompatActivity() {
+class TopOffersActivity : BaseActivity() {
 
     private val TAG: String = "TopOfffers"
 
@@ -78,10 +80,21 @@ class TopOffersActivity : AppCompatActivity() {
         }
 
         callPopularFlights()
-
         MessageBox.showError(binding.root.parent, "Chyba", "NIeco je zle.")
 
         onFilterOpen(null)
+    }
+
+    fun onShareClick(){
+        //open share dialog
+        Log.i(TAG, "Share click")
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, "URL")
+            type = "text/plain"
+        }
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
     }
 
     override fun onRequestPermissionsResult(
@@ -97,10 +110,18 @@ class TopOffersActivity : AppCompatActivity() {
         }
     }
 
+    override fun onPermissionsGranted() {
+        super.onPermissionsGranted()
+        locationManager = getSystemService(LOCATION_SERVICE) as LocationManager?;
+        //locationManager?.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0L, 0f, locationListener)
+    }
+
+
     private val locationListener: LocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location) {
-           //KiwiApi.query["flyFrom"] = "%f-%f-250km".format(location.longitude, location.latitude)
-            // callPopularFlights()
+            //Update current location and fetch new offers
+           // KiwiApi.defaultQuery[KiwiApi.FlightParams.FLY_FROM.value] =  "${location.longitude}-${location.latitude}-250km"
+           // viewModel.fetchFlights()
         }
         override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
         override fun onProviderEnabled(provider: String) {}
@@ -143,8 +164,7 @@ class TopOffersActivity : AppCompatActivity() {
         if (dialog?.isShowing!!) dialog?.dismiss()
         viewPager?.adapter =
             FlightViewPagerAdapter(
-                this,
-                dailyCheck(result.flights)
+                this,result.flights.toCollection(ArrayList())
             )
         dotsIndicator?.setViewPager(viewPager!!)
     }

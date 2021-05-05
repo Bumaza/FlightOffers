@@ -19,4 +19,6 @@
     <color name="msgbox_error_bg">#ef4242</color>
     <color name="msgbox_success_bg">#009882</color>
 
+    <color name="placeholderBg">#dddddd</color>
+
 </resources>

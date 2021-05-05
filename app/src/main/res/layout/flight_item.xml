@@ -10,258 +10,257 @@
             type="com.kiwi.task.models.Flight" />
     </data>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/bgColor"
-        >
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:orientation="vertical"
+           >
+
+           <androidx.cardview.widget.CardView
+               app:cardElevation="@dimen/elevation"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+
+               <RelativeLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="250dp">
+
+                   <ImageView
+                       android:id="@+id/destination_image"
+                       app:imageUrl="@{flight.imageUrl()}"
+                       android:layout_width="match_parent"
+                       android:layout_height="250dp"
+                       android:src="@drawable/placeholder"
+                       android:scaleType="centerCrop"
+                       tools:ignore="MissingConstraints" />
+
+                   <TextView
+                       android:layout_margin="@dimen/margin"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       style="@style/WhiteTitle28"
+                       android:text="@{flight.cityTo}"
+                       android:layout_alignParentStart="true"
+                       android:layout_alignParentBottom="true"
+                       android:textColor="@color/white"
+                       />
 
 
-        <androidx.cardview.widget.CardView
-            app:cardElevation="@dimen/elevation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                   <com.google.android.material.floatingactionbutton.FloatingActionButton
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_margin="@dimen/margin"
+                       android:src="@drawable/ic_share"
+                       app:tint="@color/grey"
+                       app:fabCustomSize="40dp"
+                       app:backgroundTint="@color/white"
+                       android:layout_alignParentTop="true"
+                       android:layout_alignParentEnd="true"
+                       />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="250dp">
-
-                <ImageView
-                    android:id="@+id/destination_image"
-                    app:imageUrl="@{flight.imageUrl()}"
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    android:src="@drawable/placeholder"
-                    android:scaleType="centerCrop"
-                    tools:ignore="MissingConstraints" />
-
-                <TextView
-                    android:layout_margin="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/WhiteTitle28"
-                    android:text="@{flight.cityTo}"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentBottom="true"
-                    android:textColor="@color/white"
-                    />
-
-            </RelativeLayout>
-
-
-
-        </androidx.cardview.widget.CardView>
-
-
-
-        <androidx.cardview.widget.CardView
-            app:cardElevation="@dimen/elevation"
-            app:cardCornerRadius="@dimen/radius"
-            app:cardBackgroundColor="@color/white"
-            android:layout_marginLeft="@dimen/margin"
-            android:layout_marginRight="@dimen/margin"
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:padding="@dimen/padding"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-
-                <LinearLayout
-                    android:layout_marginLeft="20dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:text="22:05"
-                            android:layout_gravity="center_vertical"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            style="@style/BoldText14"
-                            />
-
-                        <TextView
-                            android:text="11.5."
-                            android:layout_gravity="center_horizontal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            style="@style/GreyText12"
-                            />
-
-                    </LinearLayout>
-
-
-                    <TextView
-                        android:layout_marginLeft="30dp"
-                        android:text="@{flight.cityFrom}"
-                        android:drawableStart="@drawable/airplane_takeoff"
-                        android:drawableTint="@color/grey"
-                        android:ellipsize="marquee"
-                        android:marqueeRepeatLimit ="marquee_forever"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:scrollHorizontally="true"
-                        android:layout_width="150dp"
-                        android:drawablePadding="8dp"
-                        android:gravity="center_vertical"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_height="wrap_content"
-                        style="@style/NormalText14"
-                        />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_margin="@dimen/margin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:text="@{flight.duration}"
-                        android:drawableStart="@drawable/ic_timelapse"
-                        android:drawableTint="@color/white"
-                        android:paddingLeft="@dimen/padding"
-                        android:paddingRight="@dimen/padding"
-                        android:paddingTop="2dp"
-                        android:paddingBottom="2dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:drawablePadding="4dp"
-                        android:background="@drawable/text_bg"
-                        android:textColor="@color/white"
-                        style="@style/BoldText14"
-                        />
-
-                    <TextView
-                        android:layout_marginLeft="@dimen/margin"
-                        android:text="@{String.valueOf(flight.distance)}"
-                        android:drawableStart="@drawable/ab_testing"
-                        android:drawableTint="@color/white"
-                        android:drawablePadding="4dp"
-                        android:paddingLeft="@dimen/padding"
-                        android:paddingRight="@dimen/padding"
-                        android:paddingTop="2dp"
-                        android:paddingBottom="2dp"
-                        android:gravity="center"
-                        android:layout_gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/text_bg"
-                        android:textColor="@color/white"
-                        android:backgroundTint="@color/kiwiOrange"
-                        style="@style/BoldText14"
-                        />
-
-                    <TextView
-                        android:layout_marginLeft="@dimen/margin"
-                        android:text="3"
-                        android:drawableStart="@drawable/ic_luggage"
-                        android:drawableTint="@color/white"
-                        android:drawablePadding="4dp"
-                        android:paddingLeft="@dimen/padding"
-                        android:paddingRight="@dimen/padding"
-                        android:paddingTop="2dp"
-                        android:paddingBottom="2dp"
-                        android:gravity="center"
-                        android:layout_gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/text_bg"
-                        android:textColor="@color/white"
-                        android:backgroundTint="@color/kiwiBlue"
-                        style="@style/BoldText14"
-                        />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_marginLeft="20dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:text="22:05"
-                            android:layout_gravity="center_vertical"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            style="@style/BoldText14"
-                            />
-
-                        <TextView
-                            android:text="11.5."
-                            android:layout_gravity="center_horizontal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            style="@style/GreyText12"
-                            />
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_marginLeft="30dp"
-                        android:text="@{flight.cityTo}"
-                        android:drawableStart="@drawable/airplane_landing"
-                        android:drawableTint="@color/grey"
-                        android:ellipsize="marquee"
-                        android:marqueeRepeatLimit ="marquee_forever"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:scrollHorizontally="true"
-                        android:layout_width="150dp"
-                        android:drawablePadding="8dp"
-                        android:gravity="center_vertical"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_height="wrap_content"
-                        style="@style/NormalText14"
-                        />
-
-                </LinearLayout>
-
-
-                <View
-                    android:layout_marginTop="@dimen/margin"
-                    android:layout_width="match_parent"
-                    android:layout_margin="@dimen/margin"
-                    android:layout_height="0.5dp"
-                    android:background="@color/grey"/>
-
-
-                <TextView
-                    android:text="@{flight.formatPrice()}"
-                    android:drawableTint="@color/kiwiColor"
-                    android:layout_gravity="end"
-                    android:layout_marginRight="@dimen/margin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/BoldText18"
-                    android:textColor="@color/kiwiColor"
-                    />
-
-            </LinearLayout>
+               </RelativeLayout>
 
 
 
-        </androidx.cardview.widget.CardView>
+           </androidx.cardview.widget.CardView>
 
 
 
-    </LinearLayout>
+           <androidx.cardview.widget.CardView
+               app:cardElevation="@dimen/elevation"
+               app:cardCornerRadius="@dimen/radius"
+               app:cardBackgroundColor="@color/white"
+               android:layout_marginLeft="@dimen/margin"
+               android:layout_marginRight="@dimen/margin"
+               android:layout_marginTop="20dp"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+
+               <LinearLayout
+                   android:padding="@dimen/padding"
+                   android:orientation="vertical"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+
+
+                   <LinearLayout
+                       android:layout_marginLeft="20dp"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content">
+
+                       <LinearLayout
+                           android:orientation="vertical"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content">
+
+                           <TextView
+                               android:text="@{flight.formatDTime()}"
+                               android:layout_gravity="center_vertical"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               style="@style/BoldText14"
+                               />
+
+                           <TextView
+                               android:text="@{flight.formatDDay()}"
+                               android:layout_gravity="center_horizontal"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               style="@style/GreyText12"
+                               />
+
+                       </LinearLayout>
+
+
+                       <TextView
+                           android:layout_marginLeft="30dp"
+                           android:text="@{flight.cityFrom}"
+                           android:drawableStart="@drawable/ic_takeoff"
+                           android:drawableTint="@color/grey"
+                           android:ellipsize="marquee"
+                           android:marqueeRepeatLimit ="marquee_forever"
+                           android:focusable="true"
+                           android:focusableInTouchMode="true"
+                           android:scrollHorizontally="true"
+                           android:layout_width="150dp"
+                           android:drawablePadding="8dp"
+                           android:gravity="center_vertical"
+                           android:layout_gravity="center_horizontal"
+                           android:layout_height="wrap_content"
+                           style="@style/NormalText14"
+                           />
+
+                   </LinearLayout>
+
+                   <LinearLayout
+                       android:paddingLeft="10dp"
+                       android:layout_margin="@dimen/margin"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content">
+
+                       <TextView
+                           android:text="@{flight.duration}"
+                           android:drawableStart="@drawable/ic_timelapse"
+                           android:drawableTint="@color/white"
+                           android:paddingLeft="@dimen/padding"
+                           android:paddingRight="@dimen/padding"
+                           android:paddingTop="2dp"
+                           android:paddingBottom="2dp"
+                           android:layout_gravity="center_vertical"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:gravity="center"
+                           android:drawablePadding="4dp"
+                           android:background="@drawable/text_bg"
+                           android:textColor="@color/white"
+                           style="@style/BoldText14"
+                           />
+
+                       <TextView
+                           android:layout_marginLeft="@dimen/margin"
+                           android:text="@{flight.formatDistance()}"
+                           android:drawableStart="@drawable/ic_distance"
+                           android:drawableTint="@color/white"
+                           android:drawablePadding="4dp"
+                           android:paddingLeft="@dimen/padding"
+                           android:paddingRight="@dimen/padding"
+                           android:paddingTop="2dp"
+                           android:paddingBottom="2dp"
+                           android:gravity="center"
+                           android:layout_gravity="center"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:background="@drawable/text_bg"
+                           android:textColor="@color/white"
+                           android:backgroundTint="@color/kiwiOrange"
+                           style="@style/BoldText14"
+                           />
+
+
+                   </LinearLayout>
+
+                   <LinearLayout
+                       android:layout_marginLeft="20dp"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content">
+
+                       <LinearLayout
+                           android:orientation="vertical"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content">
+
+                           <TextView
+                               android:text="@{flight.formatATime()}"
+                               android:layout_gravity="center_vertical"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               style="@style/BoldText14"
+                               />
+
+                           <TextView
+                               android:text="@{flight.formatADay()}"
+                               android:layout_gravity="center_horizontal"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               style="@style/GreyText12"
+                               />
+
+                       </LinearLayout>
+
+                       <TextView
+                           android:layout_marginLeft="30dp"
+                           android:text="@{flight.cityTo}"
+                           android:drawableStart="@drawable/ic_landing"
+                           android:drawableTint="@color/grey"
+                           android:ellipsize="marquee"
+                           android:marqueeRepeatLimit ="marquee_forever"
+                           android:focusable="true"
+                           android:focusableInTouchMode="true"
+                           android:scrollHorizontally="true"
+                           android:layout_width="150dp"
+                           android:drawablePadding="8dp"
+                           android:gravity="center_vertical"
+                           android:layout_gravity="center_horizontal"
+                           android:layout_height="wrap_content"
+                           style="@style/NormalText14"
+                           />
+
+                   </LinearLayout>
+
+
+                   <View
+                       android:layout_marginTop="@dimen/margin"
+                       android:layout_width="match_parent"
+                       android:layout_margin="@dimen/margin"
+                       android:layout_height="0.5dp"
+                       android:background="@color/placeholderBg"/>
+
+
+                   <TextView
+                       android:text="@{flight.formatPrice()}"
+                       android:drawableTint="@color/kiwiColor"
+                       android:layout_gravity="end"
+                       android:layout_marginRight="@dimen/margin"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       style="@style/BoldText18"
+                       android:textColor="@color/kiwiColor"
+                       />
+
+               </LinearLayout>
+
+
+
+           </androidx.cardview.widget.CardView>
+
+
+       </LinearLayout>
+
+
+   </RelativeLayout>
 
 </layout>
