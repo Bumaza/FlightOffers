@@ -2,11 +2,17 @@ package com.kiwi.task.ui
 
 import android.content.pm.PackageManager
 import android.widget.Button
+import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import com.kiwi.task.R
 import com.kiwi.task.utils.PermissionKit
 
 open class BaseActivity : AppCompatActivity() {
+
+    protected inline fun <reified T : ViewDataBinding> binding(@LayoutRes resId: Int): Lazy<T> =
+        lazy { DataBindingUtil.setContentView<T>(this, resId) }
 
     var refreshWifiState: Button? = null
 

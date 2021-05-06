@@ -2,6 +2,7 @@ package com.kiwi.task.repository.api
 
 import com.kiwi.task.BuildConfig
 import com.kiwi.task.models.SearchResult
+import com.kiwi.task.utils.formatDate
 import io.reactivex.Observable
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
@@ -10,6 +11,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
+import java.util.*
 
 
 interface KiwiApi {
@@ -41,11 +43,6 @@ interface KiwiApi {
             create()
         }
 
-        val kiwiApiImageService by lazy{
-            createImageApi()
-        }
-
-
         val defaultQuery: MutableMap<String, String> = mutableMapOf(
             FlightParams.VERSION.value to BuildConfig.API_VERSION.toString(),
             FlightParams.SORT.value to "popularity",
@@ -68,6 +65,10 @@ interface KiwiApi {
 
         private fun create(): KiwiApi {
 
+            val today = Date()
+            defaultQuery[FlightParams.DATE_FROM.value] = today.formatDate()
+            defaultQuery[FlightParams.DATE_TO.value] = today.formatDate()
+
             val interceptor = HttpLoggingInterceptor()
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
 
@@ -84,18 +85,7 @@ interface KiwiApi {
 
         }
 
-
-        private fun createImageApi(): KiwiApi{
-            return Retrofit.Builder()
-                .baseUrl(BuildConfig.IMAGES_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build().create(KiwiApi::class.java)
-        }
     }
-
-    @GET("photos/600x330/{mapId}.jpg")
-    fun getImage(@Path("mapId", encoded = true) mapId: String) : Observable<ResponseBody>
 
     @GET("flights")
     fun getPopularFlights(@QueryMap params: Map<String, String>) : Observable<SearchResult>

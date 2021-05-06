@@ -5,6 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     >
 
+    <data>
+        <import type="android.view.View"/>
+
+        <variable
+            name="viewModel"
+            type="com.kiwi.task.viewmodels.TopOffersViewModel" />
+    </data>
+
     <RelativeLayout
         android:background="@color/placeholderBg"
         android:layout_width="match_parent"
@@ -16,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-        <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+        <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
             android:id="@+id/dots_inticator"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
@@ -28,20 +36,33 @@
             app:dotsColor="@color/white"
             app:dotsStrokeColor="@color/white"/>
 
-        <ImageView
-            android:layout_alignParentBottom="true"
-            android:layout_margin="@dimen/margin"
+
+        <RelativeLayout
+            android:visibility="@{viewModel.isLoading() ? View.VISIBLE : View.GONE}"
             android:layout_width="match_parent"
-            android:layout_height="240dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/connected_world"
-            />
+            android:layout_height="match_parent">
 
-        <include layout="@layout/flight_item_placeholder"/>
+            <include layout="@layout/flight_item_placeholder"/>
 
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                layout="@layout/network_error"/>
+
+        </RelativeLayout>
 
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:visibility="@{viewModel.isLoading() ? View.GONE : View.VISIBLE}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_search"

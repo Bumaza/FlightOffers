@@ -10,6 +10,7 @@ import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.kiwi.task.App
 import com.kiwi.task.R
 import com.kiwi.task.databinding.FlightItemBinding
 import com.kiwi.task.models.Flight
@@ -21,18 +22,11 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import kotlin.math.min
 
-class FlightViewPagerAdapter(private val context: Context, data: ArrayList<Flight>) : PagerAdapter() {
+class FlightViewPagerAdapter(var context: Context, var flights: ArrayList<Flight> = ArrayList()) : PagerAdapter() {
 
     var inflater : LayoutInflater = LayoutInflater.from(context)
-    var flights: ArrayList<Flight> = ArrayList<Flight>()
 
     lateinit var binding: FlightItemBinding
-
-    val cityBitmaps: HashMap<String, Bitmap>? = HashMap<String, Bitmap>()
-
-    init {
-        flights = data
-    }
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
         return view === `object`
@@ -59,18 +53,13 @@ class FlightViewPagerAdapter(private val context: Context, data: ArrayList<Fligh
         vp.removeView(v)
     }
 
-    private fun downloadImageForDestination(id: String, destination: String, imageView: ImageView){
-        KiwiApi.kiwiApiImageService.getImage(destination)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {result -> createAndSaveBitmap(id, result, imageView)},
-                {error -> println(error.message)}
-            )
+    fun extend(data: ArrayList<Flight>){
+        flights.addAll(data)
+        notifyDataSetChanged()
     }
 
-    private fun createAndSaveBitmap(id: String, result: ResponseBody, imageView: ImageView) {
-        cityBitmaps?.put(id, BitmapFactory.decodeStream(result.byteStream()))
-        imageView.setImageBitmap(cityBitmaps?.get(id))
+    fun extend(data: Array<Flight>){
+        flights.addAll(data)
+        notifyDataSetChanged()
     }
 }
