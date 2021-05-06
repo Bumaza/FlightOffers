@@ -4,11 +4,11 @@ import com.kiwi.task.BuildConfig
 import com.kiwi.task.models.SearchResult
 import com.kiwi.task.utils.formatDate
 import com.kiwi.task.utils.nextMonth
-import io.reactivex.Observable
+import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
+import io.reactivex.rxjava3.core.Observable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 import java.util.*
@@ -56,7 +56,7 @@ interface KiwiApi {
                 .baseUrl(BuildConfig.API_URL)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .build().create(KiwiApi::class.java)
 
         }

@@ -16,12 +16,16 @@
 - [Jetpack](https://developer.android.com/jetpack)
     - LiveData - observable data holder class
     - ViewModel - UI related data holder, Easily schedule asynchronous tasks for optimal execution
+- [RxJava](https://github.com/ReactiveX/RxJava) - a library for composing asynchronous and event-based programs by using observable sequences
 - [OkHttp3](https://github.com/square/okhttp) - implementing interceptor, logging web server.
 - [Retrofit2](https://github.com/square/retrofit) - REST APIs.
 - [Picasso](https://github.com/square/picasso) - loading images.
 - [Shimmer](https://github.com/facebook/shimmer-android) - an unobtrusive loading indicator
 - [Dots indicator](https://github.com/tommybuonomo/dotsindicator) - 3 different awesome styles (supports ViewPager and ViewPager2)
 
+
+<br>
+<br>
 
 ## 💎 Architecture
 

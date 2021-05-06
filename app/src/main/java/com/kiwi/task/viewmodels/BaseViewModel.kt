@@ -3,7 +3,7 @@ package com.kiwi.task.viewmodels
 import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.ViewModel
 import com.kiwi.task.App
-import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 open class BaseViewModel : ViewModel() {
 
