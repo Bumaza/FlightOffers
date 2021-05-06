@@ -25,7 +25,7 @@
             android:id="@+id/view_pager"
             android:visibility="@{viewModel.status == Status.SUCCESS ? View.VISIBLE : View.GONE}"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content"/>
 
         <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
             android:id="@+id/dots_inticator"
@@ -63,19 +63,6 @@
                 layout="@layout/network_error"/>
 
         </RelativeLayout>
-
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:visibility="@{viewModel.status == Status.SUCCESS ? View.VISIBLE : View.GONE}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_share"
-            app:tint="@color/grey"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="@dimen/margin"
-            app:backgroundTint="@color/white"
-            />
 
     </RelativeLayout>
 

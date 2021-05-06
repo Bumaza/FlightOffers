@@ -16,7 +16,6 @@ import com.kiwi.task.ui.adapters.FlightViewPagerAdapter
 import com.kiwi.task.R
 import com.kiwi.task.databinding.ActivityTopOffersBinding
 import com.kiwi.task.models.Flight
-import com.kiwi.task.ui.fragments.FilterBottomSheetFragment
 import com.kiwi.task.utils.MessageBox
 import com.kiwi.task.utils.ViewModelFactory
 import com.kiwi.task.viewmodels.TopOffersViewModel
@@ -31,7 +30,6 @@ class TopOffersActivity : BaseActivity() {
 
     private val binding by binding<ActivityTopOffersBinding>(R.layout.activity_top_offers)
     lateinit var viewModel: TopOffersViewModel
-    lateinit var filterFragment: FilterBottomSheetFragment
 
     lateinit var flightAdapter: FlightViewPagerAdapter
 
@@ -54,8 +52,6 @@ class TopOffersActivity : BaseActivity() {
             locationManager?.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0L, 0f, locationListener)
         }
 
-        //MessageBox.showError(binding.root.parent, "Chyba", "NIeco je zle.")
-        //onFilterOpen(null)
     }
 
 
@@ -66,18 +62,6 @@ class TopOffersActivity : BaseActivity() {
         viewModel.topFlights.observe(this, androidx.lifecycle.Observer {
             flightAdapter.extend(it)
         })
-    }
-
-    fun onShareClick(){
-        //open share dialog
-        Log.i(TAG, "Share click")
-        val sendIntent: Intent = Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, "URL")
-            type = "text/plain"
-        }
-        val shareIntent = Intent.createChooser(sendIntent, null)
-        startActivity(shareIntent)
     }
 
     override fun onRequestPermissionsResult(
@@ -111,44 +95,4 @@ class TopOffersActivity : BaseActivity() {
         override fun onProviderDisabled(provider: String) {}
     }
 
-
-    private fun dailyCheck(data: Array<Flight>): ArrayList<Flight>{
-
-//        val storedDate: Long = sharedPref?.getLongValue(KEY_DATE)!!
-//
-//        if(data.isEmpty()){
-//            callPopularFlights(tomorrow = true)
-//            return ArrayList()
-//        }
-//
-//        if(storedDate >= 0 && !DateUtils.isToday(storedDate)){
-//            val showedFlights = sharedPref?.getStringSet()
-//            val dayOffers = ArrayList<Flight>()
-//
-//            for(flight in data){
-//                if(!showedFlights?.contains(flight.id)!!){
-//                    dayOffers.add(flight)
-//                }
-//                if(dayOffers.size >= 5) break
-//            }
-//
-//            if(dayOffers.size < 5){
-//                callPopularFlights(showedFlights?.size!! + 5) //call +5(Dirichlet's principle)
-//                return ArrayList<Flight>()
-//            }
-//
-//            sharedPref?.save(dayOffers)
-//            sharedPref?.save(KEY_DATE, Date().time) //new stored Date.time
-//            return dayOffers
-//        }
-        return data.toCollection(ArrayList())
-    }
-
-    fun onFilterOpen(view: View?){
-        supportFragmentManager.let{
-            filterFragment = FilterBottomSheetFragment.newInstance(viewModel).apply {
-                show(it, tag)
-            }
-        }
-    }
 }

@@ -13,26 +13,18 @@ class TopOffersViewModel : BaseViewModel() {
 
     val TAG = "TopOffers"
 
-    var isChange = ObservableBoolean(false)
-    var isAscOrder = ObservableBoolean(false)
-
     var topFlights: MutableLiveData<Array<Flight>> = MutableLiveData()
-    var currentQueries: MutableMap<String, String> = mutableMapOf()
-
-    var isLoading = ObservableBoolean(true)
-    var today = Date()
-
     var status : MutableLiveData<Status> = MutableLiveData()
 
+    var currentFlight: MutableLiveData<Flight> = MutableLiveData()
+
     init{
-        currentQueries = KiwiApi.defaultQuery
         fetchFlights()
     }
 
     fun fetchFlights(limit: Int = 5){
-        isLoading.set(true)
         compositeDisposable.add(
-            KiwiApi.service.getPopularFlights(currentQueries)
+            KiwiApi.service.getPopularFlights(KiwiApi.defaultQuery)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { _ -> status.value = Status.LOADING }
@@ -40,7 +32,6 @@ class TopOffersViewModel : BaseViewModel() {
                     result ->
                     status.value = Status.SUCCESS
                     topFlights.postValue(result.flights)
-                    isLoading.set(false)
                 },
                     { error ->
                         status.value = Status.ERROR
@@ -50,21 +41,5 @@ class TopOffersViewModel : BaseViewModel() {
             )
     }
 
-    fun onAscSelect(){
-
-    }
-
-    fun onDescSelect(){
-
-    }
-
-
-    fun applyFilter(){
-        Log.d(TAG, "Apply")
-    }
-
-    fun onFilterClose(){
-
-    }
 
 }

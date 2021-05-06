@@ -16,4 +16,7 @@
     <string name="asc">Vzostupne</string>
     <string name="desc">Zostupne</string>
 
+    <string name="error">Error</string>
+    <string name="error_text">Ups, vyskytla sa neznáma chyba. Skúste to neskôr.</string>
+
 </resources>
