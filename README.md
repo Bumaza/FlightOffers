@@ -22,6 +22,7 @@
 
 ## 💎 Architecture
 
+![architecture](https://github.com/Bumaza/FlightOffers/blob/master/preview/mvvm.png)
 
 ## 📝 License
 
