@@ -2,11 +2,6 @@ package com.kiwi.task.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import com.kiwi.task.models.SearchResult
-import com.kiwi.task.repository.api.KiwiApi
-import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
@@ -16,7 +11,6 @@ import android.util.Log
 import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.kiwi.task.ui.adapters.FlightViewPagerAdapter
 import com.kiwi.task.R
@@ -25,9 +19,7 @@ import com.kiwi.task.models.Flight
 import com.kiwi.task.ui.fragments.FilterBottomSheetFragment
 import com.kiwi.task.utils.MessageBox
 import com.kiwi.task.utils.ViewModelFactory
-import com.kiwi.task.utils.formatDate
 import com.kiwi.task.viewmodels.TopOffersViewModel
-import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -50,6 +42,7 @@ class TopOffersActivity : BaseActivity() {
         viewModel = ViewModelProviders.of(this,
             ViewModelFactory.viewModelFactory { TopOffersViewModel() }).get(TopOffersViewModel::class.java)
         binding.viewModel = viewModel
+        binding.lifecycleOwner = this
 
         initAdapter()
 

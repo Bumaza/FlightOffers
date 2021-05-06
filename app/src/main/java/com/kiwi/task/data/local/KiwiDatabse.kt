@@ -1,4 +1,4 @@
-package com.kiwi.task.repository.db
+package com.kiwi.task.data.local
 
 import android.content.Context
 import androidx.room.Database
@@ -15,8 +15,6 @@ abstract class KiwiDatabse : RoomDatabase() {
     companion object{
         @Volatile private var instance: KiwiDatabse? = null
         private val LOCK = Any()
-
-        private var INSTANCE: KiwiDatabse? = null
 
         operator fun invoke(context: Context)= instance ?: synchronized(LOCK){
             instance ?: buildDatabase(context).also { instance = it}

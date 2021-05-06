@@ -50,18 +50,6 @@
                        />
 
 
-                   <com.google.android.material.floatingactionbutton.FloatingActionButton
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:layout_margin="@dimen/margin"
-                       android:src="@drawable/ic_share"
-                       app:tint="@color/grey"
-                       app:fabCustomSize="40dp"
-                       app:backgroundTint="@color/white"
-                       android:layout_alignParentTop="true"
-                       android:layout_alignParentEnd="true"
-                       />
-
                </RelativeLayout>
 
 

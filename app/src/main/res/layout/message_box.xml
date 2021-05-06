@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:elevation="@dimen/elevation"
-    android:background="@color/msgbox_error_bg"
+    android:background="@color/msgboxErrorBg"
     android:paddingTop="32dp"
     android:paddingBottom="12dp"
     android:paddingStart="24dp"

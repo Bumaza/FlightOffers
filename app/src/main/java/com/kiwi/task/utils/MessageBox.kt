@@ -55,7 +55,7 @@ class MessageBox @JvmOverloads constructor(
             box.textLabel = box.findViewById(R.id.message_box_text)
             box.titleLabel.text = title
             box.textLabel.text = text
-            box.setBackgroundResource(if (success) R.color.msgbox_success_bg else R.color.msgbox_error_bg)
+            box.setBackgroundResource(if (success) R.color.msgboxSuccessBg else R.color.msgboxErrorBg)
             parent.addView(box)
             val animation = TranslateAnimation(0F, 0F, (-300).toFloat(), 0F)
             animation.duration = 400
