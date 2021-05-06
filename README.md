@@ -8,6 +8,9 @@
 </p>
 
 ## 💡 Stack & Libraries
+
+<img src="https://github.com/Bumaza/FlightOffers/blob/master/preview/demo.gif" align="right" width="30%"></img>
+
 - Minimum SDK level 24
 - [Kotlin](https://kotlinlang.org)
 - [Jetpack](https://developer.android.com/jetpack)
@@ -23,7 +26,6 @@
 ## 💎 Architecture
 
 ![architecture](https://github.com/Bumaza/FlightOffers/blob/master/preview/mvvm.png)
-
 ## 📝 License
 
 ```

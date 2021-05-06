@@ -54,7 +54,7 @@ class TopOffersActivity : BaseActivity() {
             locationManager?.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0L, 0f, locationListener)
         }
 
-        MessageBox.showError(binding.root.parent, "Chyba", "NIeco je zle.")
+        //MessageBox.showError(binding.root.parent, "Chyba", "NIeco je zle.")
         //onFilterOpen(null)
     }
 

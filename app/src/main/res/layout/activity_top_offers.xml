@@ -35,7 +35,7 @@
             android:layout_marginTop="@dimen/margin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:dotsSize="10dp"
+            app:dotsSize="14dp"
             app:dotsSpacing="3dp"
             app:dotsColor="@color/white"
             app:dotsStrokeColor="@color/white"/>
