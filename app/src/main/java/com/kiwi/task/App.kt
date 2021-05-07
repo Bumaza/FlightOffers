@@ -15,7 +15,6 @@ class App : Application() {
             val connectivityManager : ConnectivityManager = App.context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             return connectivityManager.activeNetwork != null && connectivityManager.activeNetworkInfo?.isConnected ?: false
         }
-
     }
 
     override fun onCreate() {
