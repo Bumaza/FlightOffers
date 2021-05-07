@@ -11,14 +11,21 @@ import android.util.Log
 import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.kiwi.task.App
 import com.kiwi.task.ui.adapters.FlightViewPagerAdapter
 import com.kiwi.task.R
+import com.kiwi.task.data.network.FlightParams
+import com.kiwi.task.data.network.KiwiApi
 import com.kiwi.task.databinding.ActivityTopOffersBinding
 import com.kiwi.task.models.Flight
 import com.kiwi.task.utils.MessageBox
 import com.kiwi.task.utils.ViewModelFactory
+import com.kiwi.task.viewmodels.Status
 import com.kiwi.task.viewmodels.TopOffersViewModel
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlin.collections.ArrayList
 
 
@@ -33,17 +40,40 @@ class TopOffersActivity : BaseActivity() {
 
     lateinit var flightAdapter: FlightViewPagerAdapter
 
+
+    private val useCurrentLocation = false
+
     @SuppressLint("MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_top_offers)
         viewModel = ViewModelProviders.of(this,
             ViewModelFactory.viewModelFactory { TopOffersViewModel() }).get(TopOffersViewModel::class.java)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
+        initNetworkErrorLayout()
         initAdapter()
+        locationInit()
 
+        viewModel.status.observe(this, Observer {
+            when(it) {
+                Status.ERROR -> {
+                    MessageBox.showError(
+                        binding.root.parent,
+                        getString(R.string.error),
+                        getString(R.string.error_text)
+                    )
+                }
+            }
+        })
+    }
+
+    fun locationInit(){
+        if(!useCurrentLocation){
+            viewModel.fetchFlights()
+            return
+        }
+        viewModel.status.value = Status.LOADING
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION),0)
@@ -51,7 +81,11 @@ class TopOffersActivity : BaseActivity() {
             locationManager = getSystemService(LOCATION_SERVICE) as LocationManager?;
             locationManager?.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0L, 0f, locationListener)
         }
+    }
 
+    override fun onRefreshNetwork() {
+        super.onRefreshNetwork()
+        viewModel.fetchFlights()
     }
 
 
@@ -74,21 +108,17 @@ class TopOffersActivity : BaseActivity() {
             == PackageManager.PERMISSION_GRANTED) {
             locationManager = getSystemService(LOCATION_SERVICE) as LocationManager?;
             locationManager?.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0L, 0f, locationListener)
+        }else{
+            viewModel.fetchFlights()
         }
-    }
-
-    override fun onPermissionsGranted() {
-        super.onPermissionsGranted()
-        locationManager = getSystemService(LOCATION_SERVICE) as LocationManager?;
-        //locationManager?.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0L, 0f, locationListener)
     }
 
 
     private val locationListener: LocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location) {
             //Update current location and fetch new offers
-           // KiwiApi.defaultQuery[KiwiApi.FlightParams.FLY_FROM.value] =  "${location.longitude}-${location.latitude}-250km"
-           // viewModel.fetchFlights()
+            KiwiApi.defaultQuery[FlightParams.FLY_FROM.value] =  "${location.longitude}-${location.latitude}-300km"
+            viewModel.fetchFlights()
         }
         override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
         override fun onProviderEnabled(provider: String) {}

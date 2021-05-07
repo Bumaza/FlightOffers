@@ -21,8 +21,6 @@ open class BaseActivity : AppCompatActivity() {
         refreshWifiState?.setOnClickListener {
             onRefreshNetwork()
         }
-
-        PermissionKit.checkPermissions(this, onRequestPermissionsResult)
     }
 
     private val onRequestPermissionsResult = { requestCode: Int, permissions: Array<String>,

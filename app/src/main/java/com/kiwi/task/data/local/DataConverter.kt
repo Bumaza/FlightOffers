@@ -1,6 +1,7 @@
 package com.kiwi.task.data.local
 
 import androidx.room.TypeConverter
+import com.kiwi.task.utils.formatDate
 import java.util.*
 
 class DataConverter {
@@ -12,7 +13,7 @@ class DataConverter {
 
     @TypeConverter
     fun dateToTimestamp(date: Date?) : Long? {
-        return date?.time
+        return date?.time ?: Date().time
     }
 
 }

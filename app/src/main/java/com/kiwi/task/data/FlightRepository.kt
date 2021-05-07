@@ -9,6 +9,9 @@ import com.kiwi.task.utils.PreferencesKit
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlin.math.min
 
 class FlightRepository(private val flightDao: FlightsDao) {
@@ -27,11 +30,11 @@ class FlightRepository(private val flightDao: FlightsDao) {
     }
 
     private fun getFlightsFromDb() : Observable<List<Flight>> {
-        return flightDao.getDailyFlights()
+        return flightDao.getDailyFlights(limit)
     }
 
     private fun fetchFlightsFromApi() : Observable<List<Flight>> {
-        //update kiwi
+        //update LIMIT Dirichlet's principle
         KiwiApi.defaultQuery[FlightParams.LIMIT.value] = apiLimit.toString()
         return KiwiApi.service.getPopularFlights()
             .map { result -> result.flights}
@@ -48,6 +51,15 @@ class FlightRepository(private val flightDao: FlightsDao) {
     }
 
     fun storeFlightsInDb(flights: Array<Flight>){
+        CoroutineScope(Dispatchers.IO).launch {
+            flightDao.insert(flights)
+            PreferencesKit.updateFetchFlag()
+            Log.d(TAG, "Inserted ${flights.size} flights from Api in Db.")
+        }
+    }
+
+    /* Rx Storing
+    fun storeFlightsInDbRx(flights: Array<Flight>){
         Observable.fromCallable {  flightDao.insert(flights)}
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.io())
@@ -56,5 +68,6 @@ class FlightRepository(private val flightDao: FlightsDao) {
                 Log.d(TAG, "Inserted ${flights.size} flights from Api in Db.")
             }
     }
+    */
 
 }

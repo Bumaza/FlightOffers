@@ -9,10 +9,10 @@ import java.util.*
 interface FlightsDao {
 
     @Query("SELECT * from flights")
-    fun getAllFlights(): List<Flight>
+    fun getAllFlights(): Observable<List<Flight>>
 
-    @Query("SELECT * from flights WHERE displayedAt=:day")
-    fun getDailyFlights(day: Date = Date()): Observable<List<Flight>>
+    @Query("SELECT * from flights ORDER BY displayedAt DESC LIMIT :limit")
+    fun getDailyFlights(limit: Int): Observable<List<Flight>>
 
     @Query("SELECT * FROM flights WHERE id=:flightId")
     fun getFlight(flightId: Int) : Flight
@@ -21,7 +21,7 @@ interface FlightsDao {
     fun notExists(destination: String) : Boolean
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(flights: Array<Flight>)
+    suspend fun insert(flights: Array<Flight>)
 
     @Delete
     fun delete(vararg  flight: Flight)

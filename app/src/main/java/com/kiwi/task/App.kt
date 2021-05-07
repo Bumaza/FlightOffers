@@ -3,7 +3,7 @@ package com.kiwi.task
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
-import com.kiwi.task.repository.db.KiwiDatabse
+import com.kiwi.task.data.local.KiwiDatabse
 
 class App : Application() {
 

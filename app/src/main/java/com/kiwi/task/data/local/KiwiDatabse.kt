@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.kiwi.task.models.Flight
 
-@Database(entities= [Flight::class], version=3, exportSchema = false)
+@Database(entities= [Flight::class], version=4, exportSchema = false)
 @TypeConverters(DataConverter::class)
 abstract class KiwiDatabse : RoomDatabase() {
 
