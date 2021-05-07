@@ -17,7 +17,7 @@ import java.util.*
 interface KiwiApi {
 
     @GET("flights")
-    fun getPopularFlights(@QueryMap params: Map<String, String>) : Observable<SearchResult>
+    fun getPopularFlights(@QueryMap params: Map<String, String> = defaultQuery) : Observable<SearchResult>
 
     companion object {
 
@@ -60,7 +60,6 @@ interface KiwiApi {
                 .build().create(KiwiApi::class.java)
 
         }
-
     }
 }
 

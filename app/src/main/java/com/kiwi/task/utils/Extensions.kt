@@ -54,18 +54,28 @@ fun Long.formatTime() : String {
     return timeFormatter.format(Date(this * 1000L))
 }
 
+fun Long.isNotToday(): Boolean {
+    return Date(this).formatDate() != Date().formatDate()
+}
 
 /***
  * Context extension for Preferences
  */
 
-fun Context.getBooleanPref(key: String) : Boolean {
-    return getSharedPreferences(PreferencesKit.SHARED_PREFS_NAME, Context.MODE_PRIVATE)
-        .getBoolean(key, true)
-}
 
-fun Context.putBooleanPref(key: String, value: Boolean){
+fun Context.putLongPref(key: String, value: Long){
     getSharedPreferences(PreferencesKit.SHARED_PREFS_NAME, Context.MODE_PRIVATE)
         .edit()
-        .putBoolean(key, value)?.apply()
+        .putLong(key, value)?.apply()
+}
+
+fun Context.getLongPref(key: String) : Long {
+    return getSharedPreferences(PreferencesKit.SHARED_PREFS_NAME, Context.MODE_PRIVATE)
+        .getLong(key, 1)
+}
+
+fun Context.incrementLongPref(key: String){
+    getSharedPreferences(PreferencesKit.SHARED_PREFS_NAME, Context.MODE_PRIVATE)
+        .edit()
+        .putLong(key, getLongPref(key)+1)?.apply()
 }

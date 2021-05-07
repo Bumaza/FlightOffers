@@ -3,6 +3,8 @@ package com.kiwi.task.viewmodels
 import android.util.Log
 import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.MutableLiveData
+import com.kiwi.task.App
+import com.kiwi.task.data.FlightRepository
 import com.kiwi.task.models.Flight
 import com.kiwi.task.data.network.KiwiApi
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -12,6 +14,8 @@ import java.util.*
 class TopOffersViewModel : BaseViewModel() {
 
     val TAG = "TopOffers"
+
+    var flightRepo: FlightRepository = FlightRepository(App.db?.gDao()!!)
 
     var topFlights: MutableLiveData<Array<Flight>> = MutableLiveData()
     var status : MutableLiveData<Status> = MutableLiveData()
@@ -24,14 +28,17 @@ class TopOffersViewModel : BaseViewModel() {
 
     fun fetchFlights(limit: Int = 5){
         compositeDisposable.add(
-            KiwiApi.service.getPopularFlights(KiwiApi.defaultQuery)
+            flightRepo.getFlights()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { _ -> status.value = Status.LOADING }
                 .subscribe({
                     result ->
                     status.value = Status.SUCCESS
-                    topFlights.postValue(result.flights)
+                    result.forEach {
+                        Log.d("CITY", it.cityTo)
+                    }
+                    topFlights.postValue(result.toTypedArray())
                 },
                     { error ->
                         status.value = Status.ERROR

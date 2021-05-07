@@ -8,6 +8,8 @@ import com.kiwi.task.BuildConfig
 import com.kiwi.task.utils.formatDate
 import com.kiwi.task.utils.formatDay
 import com.kiwi.task.utils.formatTime
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Observer
 import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.*
@@ -25,6 +27,12 @@ data class Flight (
     var aTime: Long,
     @SerializedName("deep_link") var deepLink: String
 ) : Serializable {
+
+    var displayedAt : Date? = null
+
+    init{
+        displayedAt = Date()
+    }
 
     fun imageUrl() : String {
         return "${BuildConfig.IMAGES_URL}${mapIdto}${BuildConfig.IMG_EXTENSION}"
